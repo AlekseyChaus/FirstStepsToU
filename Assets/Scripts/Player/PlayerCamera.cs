@@ -7,7 +7,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float _maxAngle = 45;
     [SerializeField] private float _minAngle = -45;
     private float _rotationX;
-    void Update()
+    private void Update()
     {
         _rotationX -= Input.GetAxis("Mouse Y") * _sensVert;
         _rotationX = Mathf.Clamp(_rotationX, _minAngle, _maxAngle);

@@ -9,13 +9,13 @@ public class FPC : MonoBehaviour
     private Animator _animator;
     private CharacterController _characterController;
 
-    void Start()
+    private void Start()
     {
         _characterController = GetComponent<CharacterController>(); //получаем контроллер со сцены
         _animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
         
         // рассчет составляющих вектора
@@ -37,11 +37,7 @@ public class FPC : MonoBehaviour
         {
             _animator.SetFloat("Speed",  0.4f);
         }
-
-        
-        
-
-
+       
         transform.Rotate(0,Input.GetAxis("Mouse X") * SensHor, 0);
 
         Vector3 playerMovement = new Vector3(deltaX, deltaY , deltaZ);
