@@ -1,30 +1,29 @@
 using UnityEngine;
 
-public class FPC : MonoBehaviour
+internal class FPC : MonoBehaviour
 {
-    public float Gravity;
-    public float SensHor = 9.0f;
-    
+    [SerializeField] private float _gravity;
+    [SerializeField] private float _sensHor = 9.0f;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpSpeed;
     private Animator _animator;
     private CharacterController _characterController;
-
+    
     private void Start()
     {
-        _characterController = GetComponent<CharacterController>(); //получаем контроллер со сцены
+        _characterController = GetComponent<CharacterController>(); //Получаем контроллер со сцены
         _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        // рассчет составляющих вектора
-        float deltaX = Input.GetAxis("Horizontal") * _speed; // нажатия на кнопки  A D
-        float deltaZ = Input.GetAxis("Vertical") * _speed; // нажатия на кнопки  W S
-        float deltaY = Input.GetAxis("Jump") * _jumpSpeed; // прыжок по пробелу
+        
+        // Рассчет составляющих вектора
+        float deltaX = Input.GetAxis("Horizontal") * _speed;     // Нажатия на кнопки  A D
+        float deltaZ = Input.GetAxis("Vertical") * _speed;       // Нажатия на кнопки  W S
+        float deltaY = Input.GetAxis("Jump") * _jumpSpeed;       // Прыжок по пробелу
         // float deltaY = 0;
-
-        // работа с анимацией
+        // Работа с анимацией
         if (Input.GetKey(KeyCode.Space))
         {
             _animator.SetBool("Jump", true);
@@ -37,11 +36,11 @@ public class FPC : MonoBehaviour
         {
             _animator.SetFloat("Speed",  0.4f);
         }
-       
-        transform.Rotate(0,Input.GetAxis("Mouse X") * SensHor, 0);
+        
+        transform.Rotate(0,Input.GetAxis("Mouse X") * _sensHor, 0);
         Vector3 playerMovement = new Vector3(deltaX, deltaY , deltaZ);
-        playerMovement = Vector3.ClampMagnitude(playerMovement, _speed)
-        playerMovement.y += Gravity;
+        playerMovement = Vector3.ClampMagnitude(playerMovement, _speed);
+        playerMovement.y += _gravity;
         playerMovement *= Time.deltaTime;
         playerMovement = transform.TransformDirection(playerMovement);
         _characterController.Move(playerMovement);
